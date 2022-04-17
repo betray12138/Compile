@@ -315,7 +315,7 @@ class TARGET(object):
             for j in self.function_entry:
                 if self.function_entry[j] <= int(_index):
                     _func_name = j
-
+            _func_space = 4
             if segment[0][colon_pos+1:] == "=":
                 is_set = False
                 ''' op1 is global variable'''
@@ -403,12 +403,12 @@ class TARGET(object):
                 self.object_code.append("j label" + segment[3])
 
             elif segment[0][colon_pos+1:] == 'push':
-                self.object_code.append("sub $sp, $sp, 4")
+                self.object_code.append("sub $sp, $sp, " + str(_func_space))
                 self.object_code.append("sw $ra, 0($sp)")
 
             elif segment[0][colon_pos+1:] == "pop":
                 self.object_code.append("lw $ra, 0($sp)")
-                self.object_code.append("add $sp, $sp, 4")
+                self.object_code.append("add $sp, $sp, " + str(_func_space))
 
         ''' emit the last jr code'''
         self.object_code.pop()
